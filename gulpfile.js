@@ -6,6 +6,10 @@ var watchify = require('watchify');
 var reactify = require('reactify');
 var uglifyify = require('uglifyify');
 
+var handleError = function handleError(err) {
+  console.log(err);
+};
+
 gulp.task('browserify', function () {
   var bundler = browserify({
     entries: ['./js/app.js'],
@@ -22,11 +26,13 @@ gulp.task('browserify', function () {
       var updateStart = Date.now();
       console.log('Updating!');
       watcher.bundle() // Create new bundle that uses the cache for high performance
+      .on('error', handleError)
       .pipe(source('./bundle.js'))
       .pipe(gulp.dest('./build'));
       console.log('Updated!', (Date.now() - updateStart) + 'ms');
   })
   .bundle()
+  .on('error', handleError)
   .pipe(source('./bundle.js'))
   .pipe(gulp.dest('./build'));
 });
@@ -38,7 +44,7 @@ gulp.task('lint', function () {
 });
 
 gulp.task('compress', function () {
-  var bundler = browserify({ debug: false })
+  var bundler = browserify({ debug: false });
 
   bundler
     .add('./build/bundle.js')
