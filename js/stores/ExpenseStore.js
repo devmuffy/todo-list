@@ -1,5 +1,6 @@
 var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
+var BudgetConstants = require('../constants/BudgetConstants');
 var assign = require('lodash/object/assign');
 
 var CHANGE_EVENT = 'change';
@@ -41,7 +42,7 @@ var ExpenseStore = assign({}, EventEmitter.prototype, {
     var text;
 
     switch(action.actionType) {
-      case 'EXPENSE_CREATE':
+      case BudgetConstants.ActionTypes.CREATE_EXPENSE:
         create(action.text);
         ExpenseStore.emitChange();
         break;

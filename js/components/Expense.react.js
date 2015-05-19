@@ -1,17 +1,20 @@
 var React = require('react');
+var PropTypes = React.PropTypes;
 
 module.exports = React.createClass({
-  getInitialState: function () {
-    var name = this.props.name || 'emptyName'
+  propTypes: {
+    name: PropTypes.string
+  },
 
+  getDefaultProps: function () {
     return {
-      name: name
+      name: 'empty name'
     };
   },
 
   render: function () {
     return (
-      <div className="expense"><h1>{this.state.name}</h1></div>
+      <div className="expense"><h1>{this.props.name}</h1></div>
     );
   }
 });

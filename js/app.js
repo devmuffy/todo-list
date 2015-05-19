@@ -6,7 +6,7 @@ if (typeof window !== 'undefined') {
 }
 
 var BudgetApp = require('./components/BudgetApp.react');
-window.ExpenseActions = require('./actions/ExpenseActions');
+window.BudgetActions = require('./actions/BudgetActions');
 
 React.render(
   <BudgetApp />,

@@ -1,6 +1,8 @@
 var React = require('react');
 var Expense = require('../components/Expense.react');
+var ExpenseInput = require('../components/ExpenseInput.react');
 var ExpenseStore = require('../stores/ExpenseStore');
+var BudgetActions = require('../actions/BudgetActions');
 
 function getExpenses() {
   return {
@@ -31,13 +33,18 @@ var BudgetApp = React.createClass({
 
     return (
       <div>
-        {expenses}
+        <div><ExpenseInput onSave={this._save} /></div>
+        <div>{expenses}</div>
       </div>
     );
   },
 
   _onChange: function () {
     this.setState(getExpenses());
+  },
+
+  _save: function (text) {
+    BudgetActions.create(text);
   }
 
 });
