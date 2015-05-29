@@ -25,39 +25,39 @@ module.exports = React.createClass({
   },
 
   _onChange: function (event) {
-    if (! this._isValueValid(event.target.value))
-      this._setInvalidClass();
-    else
+    var newValue = event.target.value;
+    if (this._isValueValid(newValue)) {
       this._clearInvalidClass();
+    } else {
+      this._setInvalidClass();
+    }
 
-    this.setState({
-      value: event.target.value
-    });
+    this.setState({ value: newValue });
   },
 
   _setInvalidClass: function () {
-    this.state.classes.push('invalid');
-    this.setState({
-      classes: this.state.classes
-    });
+    var arr = this.state.classes;
+    var index = arr.indexOf('invalid');
+    if (index === -1) {
+      arr.push('invalid');
+      this.setState({ classes: arr });
+    }
   },
 
   _clearInvalidClass: function () {
-    console.log('calling');
     var arr = this.state.classes;
     var index = arr.indexOf('invalid');
     if (index > -1) {
-      arr = arr.splice(i, 1);
-      this.setState({
-        classes: arr
-      });
+      arr.splice(index, 1);
+      this.setState({ classes: arr });
     }
   },
 
   _onKeyDown: function(event) {
+    var newValue = this.state.value;
     if (event.keyCode === ENTER_KEY_CODE) {
-      if (this._isValueValid(this.state.value))
-        this._save();
+      if (this._isValueValid(newValue))
+        this._save(newValue);
     }
   },
 
@@ -70,9 +70,10 @@ module.exports = React.createClass({
     return false;
   },
 
-  _save: function () {
-    this.props.onSave(this.state.value);
+  _save: function (value) {
+    this.props.onSave(value);
     this.setState({
+      classes: [],
       value: ''
     });
   }
