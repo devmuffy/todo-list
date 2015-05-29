@@ -13,7 +13,6 @@ Dispatcher.prototype = assign({}, Dispatcher.prototype, {
    */
   register: function (callback) {
     _callbacks.push(callback);
-    console.info(callback, _callbacks);
     return _callbacks.length - 1;
   },
 
@@ -32,7 +31,7 @@ Dispatcher.prototype = assign({}, Dispatcher.prototype, {
 
     _callbacks.forEach(function (callback, i) {
       Promise.resolve(callback(payload)).then(function () {
-        resolved[i](payload);
+        resolves[i](payload);
       }, function () {
         rejects[i](new Error('Dispatcher callback unsuccessful'));
       });
