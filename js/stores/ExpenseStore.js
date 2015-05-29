@@ -41,27 +41,30 @@ var ExpenseStore = assign({}, EventEmitter.prototype, {
 
   removeChangeListener: function(callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  },
+  }
 
-  dispatcherIndex: AppDispatcher.register(function (payload) {
-    var action = payload.action;
-    var text;
+});
 
-    switch(action.actionType) {
-      case BudgetConstants.ActionTypes.CREATE_EXPENSE:
-        create(action.text);
-        ExpenseStore.emitChange();
-        break;
+AppDispatcher.register(function (payload) {
+  var action = payload.action;
+  var text;
 
-      case BudgetConstants.ActionTypes.DELETE_EXPENSE:
-        del(action.id);
-        ExpenseStore.emitChange();
-        break;
-    }
+  switch(action.actionType) {
+    case BudgetConstants.ActionTypes.CREATE_EXPENSE:
+      create(action.text);
+      break;
 
-    return true;
-  })
+    case BudgetConstants.ActionTypes.DELETE_EXPENSE:
+      del(action.id);
+      break;
 
+    default:
+      return true;
+  }
+
+  ExpenseStore.emitChange();
+
+  return true;
 });
 
 module.exports = ExpenseStore;

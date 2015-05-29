@@ -41,14 +41,17 @@ AppDispatcher.register(function (payload) {
   switch(action.actionType) {
     case BudgetConstants.ActionTypes.CREATE_EXPENSE:
       add();
-      SummaryPaneStore.emitChange();
       break;
 
     case BudgetConstants.ActionTypes.DELETE_EXPENSE:
       sub();
-      SummaryPaneStore.emitChange();
       break;
+
+    default:
+      return true;
   }
+
+  SummaryPaneStore.emitChange();
 
   return true;
 });
