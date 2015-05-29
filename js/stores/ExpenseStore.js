@@ -19,6 +19,12 @@ function create(text) {
   };
 }
 
+function del(id) {
+  if (_expenses.hasOwnProperty(id)) {
+    delete _expenses[id];
+  }
+}
+
 var ExpenseStore = assign({}, EventEmitter.prototype, {
 
   getAll: function () {
@@ -44,6 +50,11 @@ var ExpenseStore = assign({}, EventEmitter.prototype, {
     switch(action.actionType) {
       case BudgetConstants.ActionTypes.CREATE_EXPENSE:
         create(action.text);
+        ExpenseStore.emitChange();
+        break;
+
+      case BudgetConstants.ActionTypes.DELETE_EXPENSE:
+        del(action.id);
         ExpenseStore.emitChange();
         break;
     }

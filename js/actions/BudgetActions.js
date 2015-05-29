@@ -8,6 +8,13 @@ var BudgetActions = {
       actionType: BudgetConstants.ActionTypes.CREATE_EXPENSE,
       text: text
     });
+  },
+
+  delete: function (id) {
+    AppDispatcher.handleViewAction({
+      actionType: BudgetConstants.ActionTypes.DELETE_EXPENSE,
+      id: id
+    });
   }
 
 };
