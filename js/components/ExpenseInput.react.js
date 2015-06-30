@@ -12,15 +12,22 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       classes: [],
+      display: 'none',
       value: this.props.value || ''
     };
   },
 
   render: function () {
     var classString = this.state.classes.join(' ');
+    var divStyle = {
+      display: this.state.display
+    };
 
     return (
-      <input type="text" className={classString} onChange={this._onChange} onKeyDown={this._onKeyDown} value={this.state.value} />
+      <div>
+        <input type="text" className={classString} onChange={this._onChange} onKeyDown={this._onKeyDown} value={this.state.value} />
+        <input type="submit" style={divStyle} onClick={this._onSubmit} />
+      </div>
     );
   },
 
@@ -40,7 +47,7 @@ module.exports = React.createClass({
     var index = arr.indexOf('invalid');
     if (index === -1) {
       arr.push('invalid');
-      this.setState({ classes: arr });
+      this.setState({ classes: arr, display: 'none' });
     }
   },
 
@@ -49,16 +56,20 @@ module.exports = React.createClass({
     var index = arr.indexOf('invalid');
     if (index > -1) {
       arr.splice(index, 1);
-      this.setState({ classes: arr });
+      this.setState({ classes: arr, display: 'block' });
     }
   },
 
   _onKeyDown: function(event) {
-    var newValue = this.state.value;
     if (event.keyCode === ENTER_KEY_CODE) {
-      if (this._isValueValid(newValue))
-        this._save(newValue);
+      this._onSubmit();
     }
+  },
+
+  _onSubmit: function () {
+    var newValue = this.state.value;
+    if (this._isValueValid(newValue))
+      this._save(newValue);
   },
 
   _isValueValid: function (value) {
@@ -72,9 +83,6 @@ module.exports = React.createClass({
 
   _save: function (value) {
     this.props.onSave(value);
-    this.setState({
-      classes: [],
-      value: ''
-    });
+    this.setState({ classes: [], value: '' });
   }
 });
