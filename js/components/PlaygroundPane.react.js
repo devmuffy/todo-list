@@ -28,14 +28,16 @@ var PlaygroundPane = React.createClass({
     var expenses = [];
 
     for (var key in this.state.expenses) {
-      expenses.push(<Expense key={key} id={this.state.expenses[key].id} name={this.state.expenses[key].text} onClick={this._delete} />);
+      expenses.push(<li className="list-group-item"><Expense key={key} id={this.state.expenses[key].id} name={this.state.expenses[key].text} onClick={this._delete} /></li>);
     }
 
     return (
       <div className="playgroundpane">
         <h1>Playground</h1>
         <div><ExpenseInput onSave={this._save} /></div>
-        <div>{expenses}</div>
+        <ul className="list-group">
+          {expenses}
+        </ul>
       </div>
     );
   },

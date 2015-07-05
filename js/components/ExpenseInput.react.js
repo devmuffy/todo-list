@@ -2,6 +2,8 @@ var React = require('react');
 var PropTypes = React.PropTypes;
 
 var ENTER_KEY_CODE = 13;
+var ERROR_CLASS = 'has-error';
+var PREDEFINED_CLASSES = ['form-group'];
 
 module.exports = React.createClass({
   propTypes: {
@@ -11,7 +13,7 @@ module.exports = React.createClass({
 
   getInitialState: function() {
     return {
-      classes: [],
+      classes: PREDEFINED_CLASSES,
       display: 'none',
       value: this.props.value || ''
     };
@@ -24,9 +26,15 @@ module.exports = React.createClass({
     };
 
     return (
-      <div>
-        <input type="text" className={classString} onChange={this._onChange} onKeyDown={this._onKeyDown} value={this.state.value} />
-        <input type="submit" style={divStyle} onClick={this._onSubmit} />
+      <div className="row">
+        <div className="col-md-8">
+          <div className={classString}>
+            <input type="text" className="form-control" onChange={this._onChange} onKeyDown={this._onKeyDown} value={this.state.value} placeholder="Nazwa" />
+          </div>
+        </div>
+        <div className="col-md-4">
+          <input type="submit" className="btn btn-block btn-primary" style={divStyle} onClick={this._onSubmit} value="Add" />
+        </div>
       </div>
     );
   },
@@ -44,16 +52,16 @@ module.exports = React.createClass({
 
   _setInvalidClass: function () {
     var arr = this.state.classes;
-    var index = arr.indexOf('invalid');
+    var index = arr.indexOf(ERROR_CLASS);
     if (index === -1) {
-      arr.push('invalid');
+      arr.push(ERROR_CLASS);
       this.setState({ classes: arr, display: 'none' });
     }
   },
 
   _clearInvalidClass: function () {
     var arr = this.state.classes;
-    var index = arr.indexOf('invalid');
+    var index = arr.indexOf(ERROR_CLASS);
     if (index > -1) {
       arr.splice(index, 1);
       this.setState({ classes: arr, display: 'block' });
@@ -83,6 +91,6 @@ module.exports = React.createClass({
 
   _save: function (value) {
     this.props.onSave(value);
-    this.setState({ classes: [], value: '' });
+    this.setState({ classes: PREDEFINED_CLASSES, display: 'none', value: '' });
   }
 });

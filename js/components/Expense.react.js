@@ -16,7 +16,14 @@ module.exports = React.createClass({
 
   render: function () {
     return (
-      <div className="expense"><h1>{this.props.name}</h1> <button onClick={this._onClick}>Delete</button></div>
+      <div className="expense row">
+        <div className="col-md-8">
+          <p>{this.props.name}</p>
+        </div>
+        <div className="col-md-4">
+          <button className="btn btn-block btn-danger" onClick={this._onClick}>Delete</button>
+        </div>
+      </div>
     );
   },
 
