@@ -24,8 +24,10 @@ var SummaryPane = React.createClass({
   render: function () {
     return (
       <div className="summarypane">
-        <h3>Summary</h3>
-        <h4><span className="label label-info">No. of elements: {this.state.expensesLength}</span></h4>
+        <ul className="list-group">
+          <li className="list-group-item active">Summary</li>
+          <li className="list-group-item">Tasks<span className="badge">{this.state.expensesLength}</span></li>
+        </ul>
       </div>
     );
   },

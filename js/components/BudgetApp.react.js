@@ -16,8 +16,8 @@ var BudgetApp = React.createClass({
         </navbar>
         <div className="container">
           <div className="row">
-            <div className="col-md-8 col-lg-8"><PlaygroundPane /></div>
-            <div className="col-md-4 col-lg-4 jumbotron"><SummaryPane /></div>
+            <div className="col-md-8"><PlaygroundPane /></div>
+            <div className="col-md-4"><SummaryPane /></div>
           </div>
         </div>
       </div>

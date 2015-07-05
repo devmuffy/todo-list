@@ -2,38 +2,72 @@ var React = require('react');
 var PropTypes = React.PropTypes;
 
 var ENTER_KEY_CODE = 13;
-var ERROR_CLASS = 'has-error';
-var PREDEFINED_CLASSES = ['form-group'];
+var CLASSES = {
+  BTN: {
+    DEFAULT: ['btn'],
+    ERROR: 'btn-danger',
+    SUCCESS: 'btn-success'
+  },
+  INPUT_GROUP: {
+    DEFAULT: ['form-group', 'input-group'],
+    ERROR: 'has-error'
+  }
+};
+
+function duplicateArray(array) {
+  return array.slice();
+}
+
+function pushUnique(arr, value) {
+  if (arr.indexOf(value) === -1)
+    arr.push(value);
+}
+
+function removeFromArray(arr, value) {
+  var index = arr.indexOf(value);
+  if (index > -1) {
+    arr.splice(index, 1);
+  }
+}
+
+function trimAndCheckLength(value) {
+  var val = (value.trim()).length;
+
+  if (20 > val && val > 3)
+    return true;
+
+  return false;
+}
+
+function updateClasses(arr, className, remove) {
+  if (remove)
+    pushUnique(arr, className);
+  else
+    removeFromArray(arr, className);
+}
 
 module.exports = React.createClass({
   propTypes: {
-    onSave: PropTypes.func.isRequired,
-    value: PropTypes.string
+    onSave: PropTypes.func.isRequired
   },
 
   getInitialState: function() {
     return {
-      classes: PREDEFINED_CLASSES,
-      display: 'none',
-      value: this.props.value || ''
+      btnClasses: CLASSES.BTN.DEFAULT,
+      inputGroupClasses: CLASSES.INPUT_GROUP.DEFAULT,
+      inputValue: ''
     };
   },
 
   render: function () {
-    var classString = this.state.classes.join(' ');
-    var divStyle = {
-      display: this.state.display
-    };
+    var btnClassesString = this.state.btnClasses.join(' ');
+    var inputGroupClassesString = this.state.inputGroupClasses.join(' ');
 
     return (
-      <div className="row">
-        <div className="col-md-8">
-          <div className={classString}>
-            <input type="text" className="form-control" onChange={this._onChange} onKeyDown={this._onKeyDown} value={this.state.value} placeholder="Nazwa" />
-          </div>
-        </div>
-        <div className="col-md-4">
-          <input type="submit" className="btn btn-block btn-primary" style={divStyle} onClick={this._onSubmit} value="Add" />
+      <div className={inputGroupClassesString}>
+        <input type="text" className="form-control" onChange={this._onChange} onKeyDown={this._onKeyDown} value={this.state.inputValue} placeholder="Nazwa" />
+        <div className="input-group-btn">
+          <button type="submit" className={btnClassesString} onClick={this._onSubmit}>Add</button>
         </div>
       </div>
     );
@@ -41,31 +75,32 @@ module.exports = React.createClass({
 
   _onChange: function (event) {
     var newValue = event.target.value;
-    if (this._isValueValid(newValue)) {
-      this._clearInvalidClass();
-    } else {
-      this._setInvalidClass();
-    }
+    var isValueValid = trimAndCheckLength(newValue);
+    var currentBtnClasses = this._updateBtnClasses(isValueValid);
+    var currentInputGroupClasses = this._updateInputGroupClasses(isValueValid);
 
-    this.setState({ value: newValue });
+    this.setState({
+      btnClasses: currentBtnClasses,
+      inputGroupClasses: currentInputGroupClasses,
+      inputValue: newValue
+    });
   },
 
-  _setInvalidClass: function () {
-    var arr = this.state.classes;
-    var index = arr.indexOf(ERROR_CLASS);
-    if (index === -1) {
-      arr.push(ERROR_CLASS);
-      this.setState({ classes: arr, display: 'none' });
-    }
+  _updateBtnClasses: function (isValueValid) {
+    var arr = duplicateArray(this.state.btnClasses);
+
+    updateClasses(arr, CLASSES.BTN.ERROR, !isValueValid);
+    updateClasses(arr, CLASSES.BTN.SUCCESS, isValueValid);
+
+    return arr;
   },
 
-  _clearInvalidClass: function () {
-    var arr = this.state.classes;
-    var index = arr.indexOf(ERROR_CLASS);
-    if (index > -1) {
-      arr.splice(index, 1);
-      this.setState({ classes: arr, display: 'block' });
-    }
+  _updateInputGroupClasses: function (isValueValid) {
+    var arr = duplicateArray(this.state.inputGroupClasses);
+
+    updateClasses(arr, CLASSES.INPUT_GROUP.ERROR, !isValueValid);
+
+    return arr;
   },
 
   _onKeyDown: function(event) {
@@ -75,22 +110,18 @@ module.exports = React.createClass({
   },
 
   _onSubmit: function () {
-    var newValue = this.state.value;
-    if (this._isValueValid(newValue))
+    var newValue = this.state.inputValue;
+
+    if (trimAndCheckLength(newValue))
       this._save(newValue);
-  },
-
-  _isValueValid: function (value) {
-    var val = (value.trim()).length;
-
-    if (20 > val && val > 3)
-      return true;
-
-    return false;
   },
 
   _save: function (value) {
     this.props.onSave(value);
-    this.setState({ classes: PREDEFINED_CLASSES, display: 'none', value: '' });
+    this.setState({
+      btnClasses: CLASSES.BTN.DEFAULT,
+      inputGroupClasses: CLASSES.INPUT_GROUP.DEFAULT,
+      inputValue: ''
+    });
   }
 });
