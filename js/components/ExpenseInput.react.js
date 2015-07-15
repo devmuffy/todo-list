@@ -14,6 +14,10 @@ var CLASSES = {
   }
 };
 
+function toggleBool(bool) {
+  return ! bool;
+}
+
 function duplicateArray(array) {
   return array.slice();
 }
@@ -25,6 +29,7 @@ function pushUnique(arr, value) {
 
 function removeFromArray(arr, value) {
   var index = arr.indexOf(value);
+
   if (index > -1) {
     arr.splice(index, 1);
   }
@@ -33,17 +38,24 @@ function removeFromArray(arr, value) {
 function trimAndCheckLength(value) {
   var val = (value.trim()).length;
 
-  if (20 > val && val > 3)
+  if (20 > val && val > 3) {
     return true;
+  }
 
   return false;
 }
 
-function updateClasses(arr, className, remove) {
-  if (remove)
+/**
+ * @param arr {Array}
+ * @param className {String}
+ * @param state {Boolean}
+ */
+function addOrRemoveClass(arr, className, state) {
+  if (state === true) {
     pushUnique(arr, className);
-  else
+  } else {
     removeFromArray(arr, className);
+  }
 }
 
 module.exports = React.createClass({
@@ -76,29 +88,27 @@ module.exports = React.createClass({
   _onChange: function (event) {
     var newValue = event.target.value;
     var isValueValid = trimAndCheckLength(newValue);
-    var currentBtnClasses = this._updateBtnClasses(isValueValid);
-    var currentInputGroupClasses = this._updateInputGroupClasses(isValueValid);
 
     this.setState({
-      btnClasses: currentBtnClasses,
-      inputGroupClasses: currentInputGroupClasses,
+      btnClasses: this._getUpdatedBtnClasses(isValueValid),
+      inputGroupClasses: this._getUpdatedInputGroupClasses(isValueValid),
       inputValue: newValue
     });
   },
 
-  _updateBtnClasses: function (isValueValid) {
+  _getUpdatedBtnClasses: function (isValid) {
     var arr = duplicateArray(this.state.btnClasses);
 
-    updateClasses(arr, CLASSES.BTN.ERROR, !isValueValid);
-    updateClasses(arr, CLASSES.BTN.SUCCESS, isValueValid);
+    addOrRemoveClass(arr, CLASSES.BTN.ERROR, toggleBool(isValid));
+    addOrRemoveClass(arr, CLASSES.BTN.SUCCESS, isValid);
 
     return arr;
   },
 
-  _updateInputGroupClasses: function (isValueValid) {
+  _getUpdatedInputGroupClasses: function (isValid) {
     var arr = duplicateArray(this.state.inputGroupClasses);
 
-    updateClasses(arr, CLASSES.INPUT_GROUP.ERROR, !isValueValid);
+    addOrRemoveClass(arr, CLASSES.INPUT_GROUP.ERROR, toggleBool(isValid));
 
     return arr;
   },
@@ -112,16 +122,18 @@ module.exports = React.createClass({
   _onSubmit: function () {
     var newValue = this.state.inputValue;
 
-    if (trimAndCheckLength(newValue))
+    if (trimAndCheckLength(newValue)) {
       this._save(newValue);
+    }
   },
 
   _save: function (value) {
-    this.props.onSave(value);
     this.setState({
       btnClasses: CLASSES.BTN.DEFAULT,
       inputGroupClasses: CLASSES.INPUT_GROUP.DEFAULT,
       inputValue: ''
     });
+
+    this.props.onSave(value);
   }
 });
