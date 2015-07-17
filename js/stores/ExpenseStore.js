@@ -47,7 +47,6 @@ var ExpenseStore = assign({}, EventEmitter.prototype, {
 
 AppDispatcher.register(function (payload) {
   var action = payload.action;
-  var text;
 
   switch(action.actionType) {
     case BudgetConstants.ActionTypes.CREATE_EXPENSE:

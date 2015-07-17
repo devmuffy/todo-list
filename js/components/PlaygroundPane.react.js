@@ -3,6 +3,7 @@ var BudgetActions = require('../actions/BudgetActions');
 var Expense = require('../components/Expense.react');
 var ExpenseInput = require('../components/ExpenseInput.react');
 var ExpenseStore = require('../stores/ExpenseStore');
+var forEach = require('lodash/collection/forEach');
 
 function getExpenses() {
   return {
@@ -25,11 +26,16 @@ var PlaygroundPane = React.createClass({
   },
 
   render: function () {
+    var that = this;
     var expenses = [];
 
-    for (var key in this.state.expenses) {
-      expenses.push(<li className="list-group-item" key={key}><Expense key={key} id={this.state.expenses[key].id} name={this.state.expenses[key].text} onClick={this._delete} /></li>);
-    }
+    forEach(that.state.expenses, function (n, key) {
+      expenses.push(
+        <li className="list-group-item" key={key}>
+          <Expense key={key} id={that.state.expenses[key].id} name={that.state.expenses[key].text} onClick={that._delete} />
+        </li>
+      );
+    });
 
     return (
       <div className="playgroundpane">

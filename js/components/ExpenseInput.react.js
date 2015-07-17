@@ -38,11 +38,7 @@ function removeFromArray(arr, value) {
 function trimAndCheckLength(value) {
   var val = (value.trim()).length;
 
-  if (20 > val && val > 3) {
-    return true;
-  }
-
-  return false;
+  return !!(20 > val && val > 3);
 }
 
 /**
