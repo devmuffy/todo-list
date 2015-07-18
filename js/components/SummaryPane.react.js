@@ -7,7 +7,7 @@ function getExpensesLength() {
   };
 }
 
-var SummaryPane = React.createClass({
+module.exports = React.createClass({
 
   getInitialState: function () {
     return getExpensesLength();
@@ -37,5 +37,3 @@ var SummaryPane = React.createClass({
   }
 
 });
-
-module.exports = SummaryPane;

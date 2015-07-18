@@ -11,7 +11,7 @@ function getExpenses() {
   };
 }
 
-var PlaygroundPane = React.createClass({
+module.exports = React.createClass({
 
   getInitialState: function () {
     return getExpenses();
@@ -61,5 +61,3 @@ var PlaygroundPane = React.createClass({
   }
 
 });
-
-module.exports = PlaygroundPane;

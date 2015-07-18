@@ -2,7 +2,7 @@ var React = require('react');
 var PlaygroundPane = require('../components/PlaygroundPane.react');
 var SummaryPane = require('../components/SummaryPane.react');
 
-var BudgetApp = React.createClass({
+module.exports = React.createClass({
 
   render: function () {
     return (
@@ -25,5 +25,3 @@ var BudgetApp = React.createClass({
   }
 
 });
-
-module.exports = BudgetApp;

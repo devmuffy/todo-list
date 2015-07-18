@@ -1,14 +1,17 @@
-var React = require('react');
+(function () {
+  'use strict';
 
-// Global scope for React DEV-TOOLS
-if (typeof window !== 'undefined') {
-  window.React = React;
-}
+  var React = require('react');
+  var BudgetApp = require('./components/BudgetApp.react');
 
-var BudgetApp = require('./components/BudgetApp.react');
-window.BudgetActions = require('./actions/BudgetActions');
+  // Global scope for React DEV-TOOLS
+  if (typeof window !== 'undefined') {
+    window.React = React;
+  }
 
-React.render(
-  <BudgetApp />,
-  document.getElementById('BudgetApp')
-);
+  React.render(
+      <BudgetApp />,
+      document.getElementById('BudgetApp')
+  );
+
+}());

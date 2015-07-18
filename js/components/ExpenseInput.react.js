@@ -23,8 +23,9 @@ function duplicateArray(array) {
 }
 
 function pushUnique(arr, value) {
-  if (arr.indexOf(value) === -1)
+  if (arr.indexOf(value) === -1) {
     arr.push(value);
+  }
 }
 
 function removeFromArray(arr, value) {
@@ -35,10 +36,14 @@ function removeFromArray(arr, value) {
   }
 }
 
+/**
+ * @param value {string}
+ * @returns {boolean}
+ */
 function trimAndCheckLength(value) {
   var val = (value.trim()).length;
 
-  return !!(20 > val && val > 3);
+  return (20 > val && val > 3);
 }
 
 /**
@@ -55,6 +60,7 @@ function addOrRemoveClass(arr, className, state) {
 }
 
 module.exports = React.createClass({
+
   propTypes: {
     onSave: PropTypes.func.isRequired
   },
@@ -132,4 +138,5 @@ module.exports = React.createClass({
 
     this.props.onSave(value);
   }
+
 });
