@@ -1,34 +1,37 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
+var Dispatcher = require('../lib/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
 var BudgetConstants = require('../constants/BudgetConstants');
+var ItemClient = require('../client/ItemClient');
 var assign = require('lodash/object/assign');
 
 var CHANGE_EVENT = 'change';
-
-var _expenses = {};
+var _items = ItemClient.load();
 
 /**
  * @param {string} text The content of the expense
  */
 function create(text) {
   var id = Date.now();
-  _expenses[id] = {
+
+  _items[id] = {
     id: id,
     complete: false,
     text: text
   };
+  ItemClient.save(_items);
 }
 
 function del(id) {
-  if (_expenses.hasOwnProperty(id)) {
-    delete _expenses[id];
+  if (_items.hasOwnProperty(id)) {
+    delete _items[id];
+    ItemClient.save(_items);
   }
 }
 
 var ExpenseStore = assign({}, EventEmitter.prototype, {
 
   getAll: function () {
-    return _expenses;
+    return _items;
   },
 
   emitChange: function () {
@@ -45,16 +48,14 @@ var ExpenseStore = assign({}, EventEmitter.prototype, {
 
 });
 
-AppDispatcher.register(function (payload) {
-  var action = payload.action;
-
-  switch(action.actionType) {
+Dispatcher.register(function (payload) {
+  switch(payload.actionType) {
     case BudgetConstants.ActionTypes.CREATE_EXPENSE:
-      create(action.text);
+      create(payload.text);
       break;
 
     case BudgetConstants.ActionTypes.DELETE_EXPENSE:
-      del(action.id);
+      del(payload.id);
       break;
 
     default:

@@ -1,10 +1,7 @@
-var Promise = require('promise');
-var assign = require('lodash/object/assign');
-
+//var Promise = require('promise');
 var _callbacks = [];
 
-var Dispatcher = function () {};
-Dispatcher.prototype = assign({}, Dispatcher.prototype, {
+module.exports = {
 
   /**
    * @param {function} callback
@@ -24,6 +21,4 @@ Dispatcher.prototype = assign({}, Dispatcher.prototype, {
     });
   }
 
-});
-
-module.exports = Dispatcher;
+};

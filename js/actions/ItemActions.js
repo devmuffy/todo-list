@@ -1,22 +1,20 @@
-var AppDispatcher = require('../dispatcher/AppDispatcher');
+var Dispatcher = require('../lib/Dispatcher');
 var BudgetConstants = require('../constants/BudgetConstants');
 
-var BudgetActions = {
+module.exports = {
 
   create: function (text) {
-    AppDispatcher.handleViewAction({
+    Dispatcher.dispatch({
       actionType: BudgetConstants.ActionTypes.CREATE_EXPENSE,
       text: text
     });
   },
 
   delete: function (id) {
-    AppDispatcher.handleViewAction({
+    Dispatcher.dispatch({
       actionType: BudgetConstants.ActionTypes.DELETE_EXPENSE,
       id: id
     });
   }
 
 };
-
-module.exports = BudgetActions;

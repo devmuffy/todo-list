@@ -1,13 +1,13 @@
 var React = require('react');
-var BudgetActions = require('../actions/BudgetActions');
-var Expense = require('../components/Expense.react');
-var ExpenseInput = require('../components/ExpenseInput.react');
-var ExpenseStore = require('../stores/ExpenseStore');
+var Item = require('../components/Item.react');
+var ItemActions = require('../actions/ItemActions');
+var ItemInputForm = require('../components/ItemInputForm.react');
+var ItemStore = require('../stores/ItemStore');
 var forEach = require('lodash/collection/forEach');
 
 function getExpenses() {
   return {
-    expenses: ExpenseStore.getAll()
+    expenses: ItemStore.getAll()
   };
 }
 
@@ -18,11 +18,11 @@ module.exports = React.createClass({
   },
 
   componentDidMount: function() {
-    ExpenseStore.addChangeListener(this._onChange);
+    ItemStore.addChangeListener(this._onChange);
   },
 
   componentWillUnmount: function() {
-    ExpenseStore.removeChangeListener(this._onChange);
+    ItemStore.removeChangeListener(this._onChange);
   },
 
   render: function () {
@@ -32,7 +32,7 @@ module.exports = React.createClass({
     forEach(that.state.expenses, function (n, key) {
       expenses.push(
         <li className="list-group-item" key={key}>
-          <Expense key={key} id={that.state.expenses[key].id} name={that.state.expenses[key].text} onClick={that._delete} />
+          <Item key={key} id={that.state.expenses[key].id} name={that.state.expenses[key].text} onClick={that._delete} />
         </li>
       );
     });
@@ -40,7 +40,9 @@ module.exports = React.createClass({
     return (
       <div className="playgroundpane">
         <h1 className="page-header">Playground</h1>
-        <div><ExpenseInput onSave={this._save} /></div>
+        <div>
+          <ItemInputForm onSave={this._save} />
+        </div>
         <ul className="list-group">
           {expenses}
         </ul>
@@ -53,11 +55,11 @@ module.exports = React.createClass({
   },
 
   _save: function (text) {
-    BudgetActions.create(text);
+    ItemActions.create(text);
   },
 
   _delete: function (id) {
-    BudgetActions.delete(id);
+    ItemActions.delete(id);
   }
 
 });

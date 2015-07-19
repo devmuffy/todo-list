@@ -2,7 +2,7 @@
   'use strict';
 
   var React = require('react');
-  var BudgetApp = require('./components/BudgetApp.react');
+  var App = require('./components/App.react.js');
 
   // Global scope for React DEV-TOOLS
   if (typeof window !== 'undefined') {
@@ -10,8 +10,8 @@
   }
 
   React.render(
-      <BudgetApp />,
-      document.getElementById('BudgetApp')
+      <App />,
+      document.getElementById('App')
   );
 
 }());

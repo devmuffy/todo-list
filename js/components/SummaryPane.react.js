@@ -1,24 +1,24 @@
 var React = require('react');
 var SummaryPaneStore = require('../stores/SummaryPaneStore');
 
-function getExpensesLength() {
+function getItems() {
   return {
-    expensesLength: SummaryPaneStore.getExpensesLength()
+    expensesLength: SummaryPaneStore.get()
   };
 }
 
 module.exports = React.createClass({
 
   getInitialState: function () {
-    return getExpensesLength();
+    return getItems();
   },
 
   componentDidMount: function () {
-    SummaryPaneStore.addChangeListener(this._onChange);
+    SummaryPaneStore.addChangeListener(this._update);
   },
 
   componentWillUnmount: function () {
-    SummaryPaneStore.removeChangeListener(this._onChange);
+    SummaryPaneStore.removeChangeListener(this._update);
   },
 
   render: function () {
@@ -32,8 +32,8 @@ module.exports = React.createClass({
     );
   },
 
-  _onChange: function () {
-    this.setState(getExpensesLength());
+  _update: function () {
+    this.setState(getItems());
   }
 
 });
