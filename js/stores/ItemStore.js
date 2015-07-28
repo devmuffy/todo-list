@@ -1,7 +1,7 @@
 var Dispatcher = require('../lib/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
-var BudgetConstants = require('../constants/BudgetConstants');
-var ItemClient = require('../client/ItemClient');
+var ItemConstants = require('../constants/ItemConstants');
+var ItemClient = require('../utils/ItemClient');
 var assign = require('lodash/object/assign');
 
 var CHANGE_EVENT = 'change';
@@ -18,6 +18,7 @@ function create(text) {
     complete: false,
     text: text
   };
+
   ItemClient.save(_items);
 }
 
@@ -28,7 +29,7 @@ function del(id) {
   }
 }
 
-var ExpenseStore = assign({}, EventEmitter.prototype, {
+var ItemStore = assign({}, EventEmitter.prototype, {
 
   getAll: function () {
     return _items;
@@ -50,11 +51,11 @@ var ExpenseStore = assign({}, EventEmitter.prototype, {
 
 Dispatcher.register(function (payload) {
   switch(payload.actionType) {
-    case BudgetConstants.ActionTypes.CREATE_EXPENSE:
+    case ItemConstants.ActionTypes.CREATE_EXPENSE:
       create(payload.text);
       break;
 
-    case BudgetConstants.ActionTypes.DELETE_EXPENSE:
+    case ItemConstants.ActionTypes.DELETE_EXPENSE:
       del(payload.id);
       break;
 
@@ -62,9 +63,9 @@ Dispatcher.register(function (payload) {
       return true;
   }
 
-  ExpenseStore.emitChange();
+  ItemStore.emitChange();
 
   return true;
 });
 
-module.exports = ExpenseStore;
+module.exports = ItemStore;

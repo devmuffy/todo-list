@@ -1,7 +1,7 @@
 var React = require('react');
 var SummaryPaneStore = require('../stores/SummaryPaneStore');
 
-function getItems() {
+function getStateFromStores() {
   return {
     expensesLength: SummaryPaneStore.get()
   };
@@ -10,7 +10,7 @@ function getItems() {
 module.exports = React.createClass({
 
   getInitialState: function () {
-    return getItems();
+    return getStateFromStores();
   },
 
   componentDidMount: function () {
@@ -33,7 +33,7 @@ module.exports = React.createClass({
   },
 
   _update: function () {
-    this.setState(getItems());
+    this.setState(getStateFromStores());
   }
 
 });

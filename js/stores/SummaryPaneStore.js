@@ -1,11 +1,10 @@
 var Dispatcher = require('../lib/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
-var BudgetConstants = require('../constants/BudgetConstants');
+var ItemConstants = require('../constants/ItemConstants');
 var ItemClient = require('../client/ItemClient');
 var assign = require('lodash/object/assign');
 
 var CHANGE_EVENT = 'change';
-console.info(ItemClient.load());
 var _expensesLength = Object.keys(ItemClient.load()).length;
 
 function add() {
@@ -38,11 +37,11 @@ var SummaryPaneStore = assign({}, EventEmitter.prototype, {
 
 Dispatcher.register(function (payload) {
   switch(payload.actionType) {
-    case BudgetConstants.ActionTypes.CREATE_EXPENSE:
+    case ItemConstants.ActionTypes.CREATE_EXPENSE:
       add();
       break;
 
-    case BudgetConstants.ActionTypes.DELETE_EXPENSE:
+    case ItemConstants.ActionTypes.DELETE_EXPENSE:
       sub();
       break;
 

@@ -5,16 +5,16 @@ var ItemInputForm = require('../components/ItemInputForm.react');
 var ItemStore = require('../stores/ItemStore');
 var forEach = require('lodash/collection/forEach');
 
-function getExpenses() {
+function getStateFromStores() {
   return {
-    expenses: ItemStore.getAll()
+    items: ItemStore.getAll()
   };
 }
 
 module.exports = React.createClass({
 
   getInitialState: function () {
-    return getExpenses();
+    return getStateFromStores();
   },
 
   componentDidMount: function() {
@@ -27,12 +27,12 @@ module.exports = React.createClass({
 
   render: function () {
     var that = this;
-    var expenses = [];
+    var items = [];
 
-    forEach(that.state.expenses, function (n, key) {
-      expenses.push(
+    forEach(that.state.items, function (n, key) {
+      items.push(
         <li className="list-group-item" key={key}>
-          <Item key={key} id={that.state.expenses[key].id} name={that.state.expenses[key].text} onClick={that._delete} />
+          <Item key={key} id={that.state.items[key].id} name={that.state.items[key].text} onClick={that._delete} />
         </li>
       );
     });
@@ -44,14 +44,14 @@ module.exports = React.createClass({
           <ItemInputForm onSave={this._save} />
         </div>
         <ul className="list-group">
-          {expenses}
+          {items}
         </ul>
       </div>
     );
   },
 
   _onChange: function () {
-    this.setState(getExpenses());
+    this.setState(getStateFromStores());
   },
 
   _save: function (text) {
