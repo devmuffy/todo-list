@@ -3,7 +3,7 @@ var SummaryPaneStore = require('../stores/SummaryPaneStore');
 
 function getStateFromStores() {
   return {
-    expensesLength: SummaryPaneStore.get()
+    itemsCount: SummaryPaneStore.get()
   };
 }
 
@@ -26,7 +26,7 @@ module.exports = React.createClass({
       <div className="summarypane">
         <ul className="list-group">
           <li className="list-group-item active">Summary</li>
-          <li className="list-group-item">Tasks<span className="badge">{this.state.expensesLength}</span></li>
+          <li className="list-group-item">Tasks<span className="badge">{this.state.itemsCount}</span></li>
         </ul>
       </div>
     );

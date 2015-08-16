@@ -1,5 +1,5 @@
-var React = require('react');
 var PlaygroundPane = require('../components/PlaygroundPane.react');
+var React = require('react');
 var SummaryPane = require('../components/SummaryPane.react');
 
 module.exports = React.createClass({

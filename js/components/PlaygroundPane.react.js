@@ -1,8 +1,9 @@
-var React = require('react');
 var Item = require('../components/Item.react');
 var ItemActions = require('../actions/ItemActions');
 var ItemInputForm = require('../components/ItemInputForm.react');
 var ItemStore = require('../stores/ItemStore');
+var React = require('react');
+
 var forEach = require('lodash/collection/forEach');
 
 function getStateFromStores() {

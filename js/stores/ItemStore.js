@@ -1,11 +1,11 @@
+var AppConstants = require('../constants/AppConstants');
 var Dispatcher = require('../lib/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
-var ItemConstants = require('../constants/ItemConstants');
 var ItemClient = require('../utils/ItemClient');
 var assign = require('lodash/object/assign');
 
 var CHANGE_EVENT = 'change';
-var _items = ItemClient.load();
+var _items = {};
 
 /**
  * @param {string} text The content of the expense
@@ -51,11 +51,11 @@ var ItemStore = assign({}, EventEmitter.prototype, {
 
 Dispatcher.register(function (payload) {
   switch(payload.actionType) {
-    case ItemConstants.ActionTypes.CREATE_EXPENSE:
+    case AppConstants.ActionTypes.CREATE_EXPENSE:
       create(payload.text);
       break;
 
-    case ItemConstants.ActionTypes.DELETE_EXPENSE:
+    case AppConstants.ActionTypes.DELETE_EXPENSE:
       del(payload.id);
       break;
 

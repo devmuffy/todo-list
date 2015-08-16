@@ -1,7 +1,7 @@
 var Dispatcher = require('../lib/Dispatcher');
 var EventEmitter = require('events').EventEmitter;
-var ItemConstants = require('../constants/ItemConstants');
-var ItemClient = require('../client/ItemClient');
+var AppConstants = require('../constants/AppConstants');
+var ItemClient = require('../utils/ItemClient');
 var assign = require('lodash/object/assign');
 
 var CHANGE_EVENT = 'change';
@@ -37,11 +37,11 @@ var SummaryPaneStore = assign({}, EventEmitter.prototype, {
 
 Dispatcher.register(function (payload) {
   switch(payload.actionType) {
-    case ItemConstants.ActionTypes.CREATE_EXPENSE:
+    case AppConstants.ActionTypes.CREATE_EXPENSE:
       add();
       break;
 
-    case ItemConstants.ActionTypes.DELETE_EXPENSE:
+    case AppConstants.ActionTypes.DELETE_EXPENSE:
       sub();
       break;
 
