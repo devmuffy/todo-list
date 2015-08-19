@@ -4,7 +4,6 @@ var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var babelify = require('babelify');
 var watchify = require('watchify');
-var reactify = require('reactify');
 var uglifyify = require('uglifyify');
 
 gulp.task('browserify', function () {
@@ -18,7 +17,6 @@ gulp.task('browserify', function () {
     cache: {}, packageCache: {}
   });
 
-  bundler.transform(reactify);
   bundler.transform(babelify);
 
   var watcher = watchify(bundler);
