@@ -2,15 +2,16 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var source = require('vinyl-source-stream');
 var browserify = require('browserify');
+var babelify = require('babelify');
 var watchify = require('watchify');
 var reactify = require('reactify');
 var uglifyify = require('uglifyify');
 
-var handleError = function handleError(err) {
-  console.log(err);
-};
-
 gulp.task('browserify', function () {
+  var handleError = function handleError(err) {
+    console.log(err);
+  };
+
   var bundler = browserify({
     entries: ['./js/app.js'],
     debug: true,
@@ -18,6 +19,7 @@ gulp.task('browserify', function () {
   });
 
   bundler.transform(reactify);
+  bundler.transform(babelify);
 
   var watcher = watchify(bundler);
 
