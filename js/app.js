@@ -1,20 +1,15 @@
-(function () {
-  'use strict';
+import App from './components/App.react';
+import ItemClient from './utils/ItemClient';
+import React from 'react';
 
-  var App = require('./components/App.react.js');
-  var ItemClient = require('./utils/ItemClient');
-  var React = require('react');
+// Global scope for React DEV-TOOLS
+if (typeof window !== 'undefined') {
+  window.React = React;
+}
 
-  // Global scope for React DEV-TOOLS
-  if (typeof window !== 'undefined') {
-    window.React = React;
-  }
+ItemClient.load();
 
-  ItemClient.load();
-
-  React.render(
-      <App />,
-      document.body
-  );
-
-}());
+React.render(
+  <App />,
+  document.body
+);
