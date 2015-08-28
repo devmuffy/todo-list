@@ -5,10 +5,11 @@ var browserify = require('browserify');
 var babelify = require('babelify');
 var watchify = require('watchify');
 var uglifyify = require('uglifyify');
+var colors = require('colors');
 
 gulp.task('browserify', function () {
   var handleError = function handleError(err) {
-    console.log(err);
+    console.log(colors.red(err));
   };
 
   var bundler = browserify({
@@ -23,13 +24,13 @@ gulp.task('browserify', function () {
 
   return watcher
   .on('update', function () {
-      var updateStart = Date.now();
-      console.log('Updating!');
-      watcher.bundle() // Create new bundle that uses the cache for high performance
-      .on('error', handleError)
-      .pipe(source('./bundle.js'))
-      .pipe(gulp.dest('./build'));
-      console.log('Updated!', (Date.now() - updateStart) + 'ms');
+    var updateStart = Date.now();
+    console.log('Updating!');
+    watcher.bundle() // Create new bundle that uses the cache for high performance
+    .on('error', handleError)
+    .pipe(source('./bundle.js'))
+    .pipe(gulp.dest('./build'));
+    console.log('Updated!', (Date.now() - updateStart) + 'ms');
   })
   .bundle()
   .on('error', handleError)

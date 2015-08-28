@@ -1,35 +1,30 @@
-var Dispatcher = require('../lib/Dispatcher');
-var EventEmitter = require('events').EventEmitter;
-var AppConstants = require('../constants/AppConstants');
-var ItemClient = require('../utils/ItemClient');
-var assign = require('lodash/object/assign');
+import Dispatcher from '../lib/Dispatcher';
+import { EventEmitter } from 'events';
+import AppConstants from '../constants/AppConstants';
+import ItemClient from '../utils/ItemClient';
+import assign from 'lodash/object/assign';
 
-var CHANGE_EVENT = 'change';
-var _expensesLength = Object.keys(ItemClient.load()).length;
+const CHANGE_EVENT = 'change';
 
-function add() {
-  _expensesLength++;
-}
+let _expensesLength = Object.keys(ItemClient.load()).length;
+let add = () => _expensesLength++;
+let sub = () => _expensesLength--;
 
-function sub() {
-  _expensesLength--;
-}
+let SummaryPaneStore = assign({}, EventEmitter.prototype, {
 
-var SummaryPaneStore = assign({}, EventEmitter.prototype, {
-
-  get: function () {
+  get() {
     return _expensesLength;
   },
 
-  emitChange: function () {
+  emitChange() {
     this.emit(CHANGE_EVENT);
   },
 
-  addChangeListener: function (callback) {
+  addChangeListener(callback) {
     this.on(CHANGE_EVENT, callback);
   },
 
-  removeChangeListener: function(callback) {
+  removeChangeListener(callback) {
     this.removeListener(CHANGE_EVENT, callback);
   }
 
@@ -54,4 +49,4 @@ Dispatcher.register(function (payload) {
   return true;
 });
 
-module.exports = SummaryPaneStore;
+export default SummaryPaneStore;
