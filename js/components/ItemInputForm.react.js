@@ -1,17 +1,11 @@
-var React = require('react');
-var PropTypes = React.PropTypes;
+import React, { PropTypes } from 'react';
 
-var ENTER_KEY_CODE = 13;
-var CLASSES = {
-  BTN: {
-    DEFAULT: ['btn'],
-    ERROR: 'btn-danger',
-    SUCCESS: 'btn-success'
-  },
-  INPUT_GROUP: {
-    DEFAULT: ['form-group', 'input-group'],
-    ERROR: 'has-error'
-  }
+// TODO: ES5 -> ES6
+
+const ENTER_KEY_CODE = 13;
+const CLASSES = {
+  BTN: { DEFAULT: ['btn'], ERROR: 'btn-danger', SUCCESS: 'btn-success' },
+  INPUT_GROUP: { DEFAULT: ['form-group', 'input-group'], ERROR: 'has-error' }
 };
 
 function toggleBool(bool) {
@@ -59,13 +53,13 @@ function addOrRemoveClass(arr, className, state) {
   }
 }
 
-module.exports = React.createClass({
+export default React.createClass({
 
   propTypes: {
     onSave: PropTypes.func.isRequired
   },
 
-  getInitialState: function() {
+  getInitialState() {
     return {
       btnClasses: CLASSES.BTN.DEFAULT,
       inputGroupClasses: CLASSES.INPUT_GROUP.DEFAULT,
@@ -73,7 +67,7 @@ module.exports = React.createClass({
     };
   },
 
-  render: function () {
+  render() {
     var btnClassesString = this.state.btnClasses.join(' ');
     var inputGroupClassesString = this.state.inputGroupClasses.join(' ');
 
@@ -87,7 +81,7 @@ module.exports = React.createClass({
     );
   },
 
-  _onChange: function (event) {
+  _onChange(event) {
     var newValue = event.target.value;
     var isValueValid = trimAndCheckLength(newValue);
 
@@ -98,7 +92,7 @@ module.exports = React.createClass({
     });
   },
 
-  _getUpdatedBtnClasses: function (isValid) {
+  _getUpdatedBtnClasses(isValid) {
     var arr = duplicateArray(this.state.btnClasses);
 
     addOrRemoveClass(arr, CLASSES.BTN.ERROR, toggleBool(isValid));
@@ -107,7 +101,7 @@ module.exports = React.createClass({
     return arr;
   },
 
-  _getUpdatedInputGroupClasses: function (isValid) {
+  _getUpdatedInputGroupClasses(isValid) {
     var arr = duplicateArray(this.state.inputGroupClasses);
 
     addOrRemoveClass(arr, CLASSES.INPUT_GROUP.ERROR, toggleBool(isValid));
@@ -115,13 +109,13 @@ module.exports = React.createClass({
     return arr;
   },
 
-  _onKeyDown: function(event) {
+  _onKeyDown(event) {
     if (event.keyCode === ENTER_KEY_CODE) {
       this._onSubmit();
     }
   },
 
-  _onSubmit: function () {
+  _onSubmit() {
     var newValue = this.state.inputValue;
 
     if (trimAndCheckLength(newValue)) {
@@ -129,7 +123,7 @@ module.exports = React.createClass({
     }
   },
 
-  _save: function (value) {
+  _save(value) {
     this.setState({
       btnClasses: CLASSES.BTN.DEFAULT,
       inputGroupClasses: CLASSES.INPUT_GROUP.DEFAULT,

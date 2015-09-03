@@ -1,39 +1,16 @@
-var React = require('react');
-var SummaryPaneStore = require('../stores/SummaryPaneStore');
+import React from 'react';
 
-function getStateFromStores() {
-  return {
-    itemsCount: SummaryPaneStore.get()
-  };
-}
+export default React.createClass({
 
-module.exports = React.createClass({
-
-  getInitialState: function () {
-    return getStateFromStores();
-  },
-
-  componentDidMount: function () {
-    SummaryPaneStore.addChangeListener(this._update);
-  },
-
-  componentWillUnmount: function () {
-    SummaryPaneStore.removeChangeListener(this._update);
-  },
-
-  render: function () {
+  render() {
     return (
       <div className="summarypane">
         <ul className="list-group">
           <li className="list-group-item active">Summary</li>
-          <li className="list-group-item">Tasks<span className="badge">{this.state.itemsCount}</span></li>
+          <li className="list-group-item">Tasks<span className="badge">{this.props.itemsCount}</span></li>
         </ul>
       </div>
     );
-  },
-
-  _update: function () {
-    this.setState(getStateFromStores());
   }
 
 });

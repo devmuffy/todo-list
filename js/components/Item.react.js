@@ -1,33 +1,37 @@
-var React = require('react');
-var PropTypes = React.PropTypes;
+import React, { PropTypes } from 'react';
 
-module.exports = React.createClass({
+export default React.createClass({
 
   propTypes: {
     id: PropTypes.number,
-    name: PropTypes.string
+    name: PropTypes.string,
+    completed: PropTypes.bool
   },
 
-  getDefaultProps: function () {
+  getDefaultProps() {
     return {
       name: 'empty name'
     };
   },
 
-  render: function () {
+  render() {
+    const isCompleted = 'list-group-item ' + (this.props.completed ? 'disabled' : '');
+
     return (
-      <div className="expense row">
-        <div className="col-md-8">
-          <p>{this.props.name}</p>
+      <li className={isCompleted}>
+        <div className='expense row'>
+          <div className="col-md-8">
+            <p>{this.props.name}</p>
+          </div>
+          <div className="col-md-4">
+            <button className="btn btn-block btn-danger" onClick={this._onClick}>Delete</button>
+          </div>
         </div>
-        <div className="col-md-4">
-          <button className="btn btn-block btn-danger" onClick={this._onClick}>Delete</button>
-        </div>
-      </div>
+      </li>
     );
   },
 
-  _onClick: function () {
+  _onClick() {
     this.props.onClick(this.props.id);
   }
 

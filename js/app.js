@@ -2,6 +2,8 @@ import App from './components/App.react';
 import React from 'react';
 import myApp from './reducers/reducer';
 import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import ItemClient from './utils/ItemClient';
 
 let store = createStore(myApp);
 
@@ -10,7 +12,13 @@ if (typeof window !== 'undefined') {
   window.React = React;
 }
 
+store.subscribe(() => {
+  ItemClient.save(store.getState().items);
+});
+
 React.render(
-  <App store={store} />,
-  document.body
+  <Provider store={store}>
+    {() => <App />}
+  </Provider>,
+  document.getElementById('app')
 );

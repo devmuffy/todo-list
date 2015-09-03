@@ -13,9 +13,9 @@ module.exports = {
     //   });
 
     try {
-      items = JSON.parse(localStorage.getItem('items')) || {};
+      items = JSON.parse(localStorage.getItem('items')) || [];
     } catch (e) {
-      items = {};
+      items = [];
     }
 
     return items;
