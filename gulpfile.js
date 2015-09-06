@@ -1,11 +1,11 @@
+var babelify = require('babelify');
+var browserify = require('browserify');
+var colors = require('colors');
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var source = require('vinyl-source-stream');
-var browserify = require('browserify');
-var babelify = require('babelify');
-var watchify = require('watchify');
 var uglifyify = require('uglifyify');
-var colors = require('colors');
+var watchify = require('watchify');
 
 gulp.task('browserify', function () {
   var handleError = function handleError(err) {
