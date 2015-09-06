@@ -1,8 +1,7 @@
-// var request = require('superagent');
+// import request from 'superagent';
 
-module.exports = {
-
-  load: function () {
+export default {
+  load() {
     var items;
 
     // request.get('http://api.randomuser.me/')
@@ -21,7 +20,7 @@ module.exports = {
     return items;
   },
 
-  save: function (items) {
+  save(items) {
     localStorage.setItem('items', JSON.stringify(items));
   }
 
