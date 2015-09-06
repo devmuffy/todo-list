@@ -7,12 +7,7 @@ import ItemClient from './utils/ItemClient';
 
 let store = createStore(myApp);
 
-// Global scope for React DEV-TOOLS
-if (typeof window !== 'undefined') {
-  window.React = React;
-}
-
-store.subscribe(() => {
+store.subscribe(() => { // TODO: remove
   ItemClient.save(store.getState().items);
 });
 

@@ -24,15 +24,22 @@ export default React.createClass({
             <p>{this.props.name}</p>
           </div>
           <div className="col-md-4">
-            <button className="btn btn-block btn-danger" onClick={this._onClick}>Delete</button>
+            <div className="btn-group">
+              <button className="btn btn-success" onClick={this._onCompleteClick}>Complete</button>
+              <button className="btn btn-warning" onClick={this._onDeleteClick}>Delete</button>
+            </div>
           </div>
         </div>
       </li>
     );
   },
 
-  _onClick() {
-    this.props.onClick(this.props.id);
+  _onCompleteClick() {
+    this.props.onCompleteClick(this.props.id);
+  },
+
+  _onDeleteClick() {
+    this.props.onDeleteClick(this.props.id);
   }
 
 });

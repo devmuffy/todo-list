@@ -13,7 +13,13 @@ export default React.createClass({
         </div>
         <ul className="list-group">
           {this.props.items.map((item, index) =>
-            <Item key={index} id={index} completed={item.completed} name={item.text} onClick={this.props.onDelete} />
+            <Item
+              key={index}
+              id={index}
+              completed={item.completed}
+              name={item.text}
+              onCompleteClick={this.props.onComplete}
+              onDeleteClick={this.props.onDelete} />
           )}
         </ul>
       </div>

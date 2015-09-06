@@ -1,13 +1,13 @@
 import PlaygroundPane from '../components/PlaygroundPane.react';
 import React from 'react';
 import SummaryPane from '../components/SummaryPane.react';
-import { createItem, deleteItem } from '../actions/items';
+import { completeItem, createItem, deleteItem } from '../actions/items';
 import { connect } from 'react-redux';
 
 const App = React.createClass({
 
   render() {
-    const { dispatch, items, subscribe } = this.props;
+    const { dispatch, items } = this.props;
 
     return (
       <div className="budgetapp">
@@ -21,10 +21,15 @@ const App = React.createClass({
         <div className="container">
           <div className="row">
             <div className="col-md-8">
-              <PlaygroundPane items={items} onSave={text => dispatch(createItem(text))} onDelete={index => dispatch(deleteItem(index))} />
+              <PlaygroundPane items={items}
+                onComplete={index => dispatch(completeItem(index))}
+                onDelete={index => dispatch(deleteItem(index))}
+                onSave={text => dispatch(createItem(text))} />
             </div>
             <div className="col-md-4">
-              <SummaryPane itemsCount={items.length} />
+              <SummaryPane
+                itemsCount={items.length}
+                itemsCompletedCount={items.filter((item, index) => item.completed === true).length} />
             </div>
           </div>
         </div>

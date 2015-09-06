@@ -23,7 +23,7 @@ function pushUnique(arr, value) {
 }
 
 function removeFromArray(arr, value) {
-  var index = arr.indexOf(value);
+  let index = arr.indexOf(value);
 
   if (index > -1) {
     arr.splice(index, 1);
@@ -35,7 +35,7 @@ function removeFromArray(arr, value) {
  * @returns {boolean}
  */
 function trimAndCheckLength(value) {
-  var val = (value.trim()).length;
+  let val = (value.trim()).length;
 
   return (20 > val && val > 3);
 }
@@ -68,8 +68,8 @@ export default React.createClass({
   },
 
   render() {
-    var btnClassesString = this.state.btnClasses.join(' ');
-    var inputGroupClassesString = this.state.inputGroupClasses.join(' ');
+    let btnClassesString = this.state.btnClasses.join(' ');
+    let inputGroupClassesString = this.state.inputGroupClasses.join(' ');
 
     return (
       <div className={inputGroupClassesString}>
@@ -82,8 +82,8 @@ export default React.createClass({
   },
 
   _onChange(event) {
-    var newValue = event.target.value;
-    var isValueValid = trimAndCheckLength(newValue);
+    let newValue = event.target.value;
+    let isValueValid = trimAndCheckLength(newValue);
 
     this.setState({
       btnClasses: this._getUpdatedBtnClasses(isValueValid),
@@ -93,7 +93,7 @@ export default React.createClass({
   },
 
   _getUpdatedBtnClasses(isValid) {
-    var arr = duplicateArray(this.state.btnClasses);
+    let arr = duplicateArray(this.state.btnClasses);
 
     addOrRemoveClass(arr, CLASSES.BTN.ERROR, toggleBool(isValid));
     addOrRemoveClass(arr, CLASSES.BTN.SUCCESS, isValid);
@@ -102,7 +102,7 @@ export default React.createClass({
   },
 
   _getUpdatedInputGroupClasses(isValid) {
-    var arr = duplicateArray(this.state.inputGroupClasses);
+    let arr = duplicateArray(this.state.inputGroupClasses);
 
     addOrRemoveClass(arr, CLASSES.INPUT_GROUP.ERROR, toggleBool(isValid));
 
@@ -116,7 +116,7 @@ export default React.createClass({
   },
 
   _onSubmit() {
-    var newValue = this.state.inputValue;
+    let newValue = this.state.inputValue;
 
     if (trimAndCheckLength(newValue)) {
       this._save(newValue);
