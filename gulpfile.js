@@ -1,35 +1,36 @@
+var babelify = require('babelify');
+var browserify = require('browserify');
+var colors = require('colors');
 var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var source = require('vinyl-source-stream');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var reactify = require('reactify');
 var uglifyify = require('uglifyify');
-
-var handleError = function handleError(err) {
-  console.log(err);
-};
+var watchify = require('watchify');
 
 gulp.task('browserify', function () {
+  var handleError = function handleError(err) {
+    console.log(colors.red(err));
+  };
+
   var bundler = browserify({
     entries: ['./js/app.js'],
     debug: true,
     cache: {}, packageCache: {}
   });
 
-  bundler.transform(reactify);
+  bundler.transform(babelify);
 
   var watcher = watchify(bundler);
 
   return watcher
   .on('update', function () {
-      var updateStart = Date.now();
-      console.log('Updating!');
-      watcher.bundle() // Create new bundle that uses the cache for high performance
-      .on('error', handleError)
-      .pipe(source('./bundle.js'))
-      .pipe(gulp.dest('./build'));
-      console.log('Updated!', (Date.now() - updateStart) + 'ms');
+    var updateStart = Date.now();
+    console.log('Updating!');
+    watcher.bundle() // Create new bundle that uses the cache for high performance
+    .on('error', handleError)
+    .pipe(source('./bundle.js'))
+    .pipe(gulp.dest('./build'));
+    console.log('Updated!', (Date.now() - updateStart) + 'ms');
   })
   .bundle()
   .on('error', handleError)

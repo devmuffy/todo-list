@@ -1,14 +1,19 @@
-var React = require('react');
+import App from './components/App.react';
+import React from 'react';
+import myApp from './reducers/reducer';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import ItemClient from './utils/ItemClient';
 
-// Global scope for React DEV-TOOLS
-if (typeof window !== 'undefined') {
-  window.React = React;
-}
+let store = createStore(myApp);
 
-var BudgetApp = require('./components/BudgetApp.react');
-window.BudgetActions = require('./actions/BudgetActions');
+store.subscribe(() => { // TODO: remove
+  ItemClient.save(store.getState().items);
+});
 
 React.render(
-  <BudgetApp />,
-  document.getElementById('BudgetApp')
+  <Provider store={store}>
+    {() => <App />}
+  </Provider>,
+  document.getElementById('app')
 );
