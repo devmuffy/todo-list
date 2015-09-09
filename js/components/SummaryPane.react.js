@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 export default React.createClass({
 
+  propTypes: {
+    itemsCompletedCount: React.PropTypes.number.isRequired,
+    itemsCount: React.PropTypes.number.isRequired
+  },
+
   render() {
-    let progressStyle = {
-      width: this.props.itemsCompletedCount / this.props.itemsCount * 100 + '%'
+    const progressStyle = {
+      width: calculateThePercentage(this.props.itemsCompletedCount, this.props.itemsCount)
     };
 
     return (
@@ -13,7 +18,11 @@ export default React.createClass({
           <li className="list-group-item active">
             <h3>Summary</h3>
           </li>
-          <li className="list-group-item">Tasks<span className="badge">{this.props.itemsCount}</span></li>
+
+          <li className="list-group-item">
+            Tasks<span className="badge">{this.props.itemsCount}</span>
+          </li>
+
           <li className="list-group-item">
             <p>Completed</p>
             <div className="progress">
@@ -28,3 +37,11 @@ export default React.createClass({
   }
 
 });
+
+function calculateThePercentage(dividend, divisior) {
+  if (divisior === 0) {
+    return '0%';
+  }
+
+  return (dividend / divisior) * 100 + '%';
+}

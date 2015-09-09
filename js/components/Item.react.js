@@ -3,9 +3,11 @@ import React, { PropTypes } from 'react';
 export default React.createClass({
 
   propTypes: {
-    id: PropTypes.number,
-    name: PropTypes.string,
-    completed: PropTypes.bool
+    completed: PropTypes.bool.isRequired,
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    onCompleteClick: PropTypes.func.isRequired,
+    onDeleteClick: PropTypes.func.isRequired
   },
 
   getDefaultProps() {

@@ -1,8 +1,15 @@
 import Item from '../components/Item.react';
 import ItemInputForm from '../components/ItemInputForm.react';
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 export default React.createClass({
+
+  propTypes: {
+    items: React.PropTypes.array.isRequired,
+    onComplete: PropTypes.func.isRequired,
+    onDelete: PropTypes.func.isRequired,
+    onSave: PropTypes.func.isRequired
+  },
 
   render() {
     return (

@@ -16,7 +16,7 @@ function items(state = initialState, action) {
   case CREATE_ITEM:
     return [
       ...state,
-      { text: action.text }
+      { text: action.text, completed: false }
     ];
 
   case DELETE_ITEM:
