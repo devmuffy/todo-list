@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 
 export default React.createClass({
 
@@ -17,18 +18,21 @@ export default React.createClass({
   },
 
   render() {
-    const isCompleted = 'list-group-item ' + (this.props.completed ? 'disabled' : '');
+    const listItemClasses = {
+      'list-group-item': true,
+      'disabled': this.props.completed
+    };
 
     return (
-      <li className={isCompleted}>
+      <li className={classNames(listItemClasses)}>
         <div className='expense row'>
           <div className="col-md-8">
             <p>{this.props.name}</p>
           </div>
           <div className="col-md-4">
             <div className="btn-group">
-              <button className="btn btn-success" onClick={this._onCompleteClick}>Complete</button>
-              <button className="btn btn-warning" onClick={this._onDeleteClick}>Delete</button>
+              <button className="btn btn-success" onClick={this.handleCompleteClick}>Complete</button>
+              <button className="btn btn-warning" onClick={this.handleDeleteClick}>Delete</button>
             </div>
           </div>
         </div>
@@ -36,11 +40,11 @@ export default React.createClass({
     );
   },
 
-  _onCompleteClick() {
+  handleCompleteClick() {
     this.props.onCompleteClick(this.props.id);
   },
 
-  _onDeleteClick() {
+  handleDeleteClick() {
     this.props.onDeleteClick(this.props.id);
   }
 

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 
 const ENTER_KEY_CODE = 13;
 
@@ -16,23 +17,27 @@ export default React.createClass({
   },
 
   render() {
-    const { btnClasses, inputGroupClasses } = this._getClasses();
+    const buttonClasses = {
+      'btn': true,
+      'btn-success': this.state.isValueValid,
+      'btn-danger': toggleBool(this.state.isValueValid)
+    };
 
     return (
-      <div className={inputGroupClasses.join(' ')}>
+      <div className="form-group input-group">
         <input
           type="text"
           className="form-control"
-          onChange={this._onChange}
-          onKeyDown={this._onKeyDown}
+          onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
           value={this.state.inputValue}
           placeholder="Task name" />
 
         <div className="input-group-btn">
           <button
             type="submit"
-            className={btnClasses.join(' ')}
-            onClick={this._onSubmit}>
+            className={classNames(buttonClasses)}
+            onClick={this.handleClick}>
             Add
           </button>
         </div>
@@ -40,24 +45,7 @@ export default React.createClass({
     );
   },
 
-  _getClasses() {
-    const btnClasses = ['btn'];
-    const inputGroupClasses = ['form-group', 'input-group'];
-
-    if (this.state.isValueValid) {
-      btnClasses.push('btn-success');
-    } else {
-      btnClasses.push('btn-danger');
-      // inputGroupClasses.push('has-error');
-    }
-
-    return {
-      btnClasses,
-      inputGroupClasses
-    };
-  },
-
-  _onChange(event) {
+  handleChange(event) {
     const newValue = removeSpaces(event.target.value);
     const isValueValid = hasStringMatchingLength(newValue);
 
@@ -67,25 +55,29 @@ export default React.createClass({
     });
   },
 
-  _onKeyDown(event) {
-    if (event.keyCode === ENTER_KEY_CODE) {
-      this._onSubmit();
-    }
-  },
-
-  _onSubmit() {
+  handleClick() {
     if (this.state.isValueValid) {
       this.setState(this.getInitialState());
       this.props.onSave(this.state.inputValue);
+    }
+  },
+
+  handleKeyDown(event) {
+    if (event.keyCode === ENTER_KEY_CODE) {
+      this.handleClick();
     }
   }
 
 });
 
-function removeSpaces(value) {
-  return value.replace(/\s+/g, ' ');
+function toggleBool(value) {
+  return ! value;
 }
 
 function hasStringMatchingLength(value) {
   return (20 > value.length && value.length > 3);
+}
+
+function removeSpaces(value) {
+  return value.replace(/\s+/g, ' ');
 }
