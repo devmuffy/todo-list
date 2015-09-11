@@ -1,13 +1,24 @@
 import PlaygroundPane from '../components/PlaygroundPane.react';
 import React from 'react';
 import SummaryPane from '../components/SummaryPane.react';
-import { completeItem, createItem, deleteItem } from '../actions/items';
+import { completeItem, createItem, deleteItem, setVisibilityFilter, VisiblityFilters } from '../actions/items';
 import { connect } from 'react-redux';
 
 const App = React.createClass({
 
   render() {
-    const { dispatch, items } = this.props;
+    const { dispatch, filter, items } = this.props;
+
+    const shownItems = items.filter((item) => {
+      switch (filter) {
+      case VisiblityFilters.SHOW_ACTIVE:
+        return item.completed !== true;
+      case VisiblityFilters.SHOW_COMPLETED:
+        return item.completed === true;
+      default:
+        return true;
+      }
+    });
 
     return (
       <div className="budgetapp">
@@ -21,10 +32,13 @@ const App = React.createClass({
         <div className="container">
           <div className="row">
             <div className="col-md-8">
-              <PlaygroundPane items={items}
+              <PlaygroundPane
+                filter={filter}
+                items={shownItems}
                 onComplete={index => dispatch(completeItem(index))}
                 onDelete={index => dispatch(deleteItem(index))}
-                onSave={text => dispatch(createItem(text))} />
+                onSave={(id, text) => dispatch(createItem({id, text}))}
+                onFilterChange={filter => dispatch(setVisibilityFilter(filter))} />
             </div>
             <div className="col-md-4">
               <SummaryPane
@@ -41,6 +55,7 @@ const App = React.createClass({
 
 function select(state) {
   return {
+    filter: state.visiblityFilter,
     items: state.items
   };
 }

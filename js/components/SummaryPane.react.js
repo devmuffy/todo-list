@@ -28,6 +28,7 @@ export default React.createClass({
             <div className="progress">
               <div className="progress-bar progress-bar-info progress-bar-striped" style={progressStyle}>
                 <span className="sr-only">{progressStyle.width} Complete</span>
+                {progressStyle.width} Complete
               </div>
             </div>
           </li>
@@ -43,5 +44,5 @@ function calculateThePercentage(dividend, divisior) {
     return '0%';
   }
 
-  return (dividend / divisior) * 100 + '%';
+  return Math.floor((dividend / divisior) * 100) + '%';
 }

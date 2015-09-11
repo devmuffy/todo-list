@@ -8,8 +8,8 @@
     "lodash": "^3.8.0",
     "promise": "^7.0.1",
     "react": "^0.13.2",
-    "react-redux": "^0.9.0",
-    "redux": "^1.0.1",
+    "react-redux": "*",
+    "redux": "^2.0.0",
     "superagent": "^1.2.0"
   },
   "devDependencies": {
@@ -25,7 +25,8 @@
     "karma-browserify": "^4.2.1",
     "karma-chrome-launcher": "^0.2.0",
     "karma-jasmine": "^0.2.2",
-    "redux-devtools": "^1.0.2",
+    "redux-devtools": "*",
+    "redux-thunk": "^0.1.0",
     "serve-static": "^1.10.0",
     "uglifyify": "^3.0.1",
     "vinyl-source-stream": "^1.1.0",

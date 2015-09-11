@@ -5,16 +5,10 @@ export default React.createClass({
 
   propTypes: {
     completed: PropTypes.bool.isRequired,
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     onCompleteClick: PropTypes.func.isRequired,
     onDeleteClick: PropTypes.func.isRequired
-  },
-
-  getDefaultProps() {
-    return {
-      name: 'empty name'
-    };
   },
 
   render() {
