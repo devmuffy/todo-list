@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
+import { removeMultipleSpaces, uuid } from '../utils/utils';
 
 const ENTER_KEY_CODE = 13;
 
@@ -24,29 +25,28 @@ export default React.createClass({
     };
 
     return (
-      <div className="form-group input-group">
+      <div className="form-inline form-group">
         <input
           type="text"
           className="form-control"
+          maxLength="20"
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           value={this.state.inputValue}
           placeholder="Task name" />
 
-        <div className="input-group-btn">
-          <button
-            type="submit"
-            className={classNames(buttonClasses)}
-            onClick={this.handleClick}>
-            Add
-          </button>
-        </div>
+        <button
+          type="submit"
+          className={classNames(buttonClasses)}
+          onClick={this.handleClick}>
+          <span className="glyphicon glyphicon-plus"></span> Add
+        </button>
       </div>
     );
   },
 
   handleChange(event) {
-    const newValue = removeSpaces(event.target.value);
+    const newValue = removeMultipleSpaces(event.target.value);
     const isValueValid = hasStringMatchingLength(newValue);
 
     this.setState({
@@ -76,23 +76,4 @@ function toggleBool(value) {
 
 function hasStringMatchingLength(value) {
   return (20 > value.length && value.length > 3);
-}
-
-function removeSpaces(value) {
-  return value.replace(/\s+/g, ' ');
-}
-
-function uuid() {
-  let random;
-  let uuid = '';
-
-  for (let i = 0; i < 32; i++) {
-    random = Math.random() * 16 | 0;
-    if (i === 8 || i === 12 || i === 16 || i === 20) {
-      uuid += '-';
-    }
-    uuid += (i === 12 ? 4 : (i === 16 ? (random & 3 | 8) : random)).toString(16);
-  }
-
-  return uuid;
 }

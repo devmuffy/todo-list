@@ -1,3 +1,4 @@
+import { debounce } from 'lodash';
 import Item from '../components/Item.react';
 import ItemInputForm from '../components/ItemInputForm.react';
 import React, { PropTypes } from 'react';
@@ -27,6 +28,13 @@ export default React.createClass({
             {this.renderFilter(SHOW_COMPLETED, 'Completed')}
           </div>
         </div>
+
+        <input
+          type="text"
+          className="form-control"
+          maxLength="20"
+          onChange={this.handleNameFilterChange} />
+
         <ul className="list-group">
           {this.props.items.map((item) =>
             <Item
@@ -42,8 +50,19 @@ export default React.createClass({
     );
   },
 
+  componentWillMount() {
+    this.delayedCallback = debounce(event => {
+      this.props.onNameFilterChange(event.target.value);
+    }, 200);
+  },
+
   handleChange(event) {
     this.props.onFilterChange(event.target.value);
+  },
+
+  handleNameFilterChange(event) {
+    event.persist();
+    this.delayedCallback(event);
   },
 
   renderFilter(filter, name) {

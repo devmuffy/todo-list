@@ -1,15 +1,16 @@
 import PlaygroundPane from '../components/PlaygroundPane.react';
 import React from 'react';
 import SummaryPane from '../components/SummaryPane.react';
-import { completeItem, createItem, deleteItem, setVisibilityFilter, VisiblityFilters } from '../actions/items';
+import { completeItem, createItem, deleteItem, setNameFilter, setVisibilityFilter, VisiblityFilters } from '../actions/items';
 import { connect } from 'react-redux';
 
 const App = React.createClass({
 
   render() {
-    const { dispatch, filter, items } = this.props;
+    const { dispatch, filter, items, nameFilter } = this.props;
 
-    const shownItems = items.filter((item) => {
+    const shownItems = items
+    .filter(item => {
       switch (filter) {
       case VisiblityFilters.SHOW_ACTIVE:
         return item.completed !== true;
@@ -18,6 +19,9 @@ const App = React.createClass({
       default:
         return true;
       }
+    })
+    .filter(item => {
+      return item.text.indexOf(nameFilter) > -1;
     });
 
     return (
@@ -37,13 +41,16 @@ const App = React.createClass({
                 items={shownItems}
                 onComplete={index => dispatch(completeItem(index))}
                 onDelete={index => dispatch(deleteItem(index))}
+                onFilterChange={filter => dispatch(setVisibilityFilter(filter))}
+                onNameFilterChange={nameFilter => dispatch(setNameFilter(nameFilter))}
                 onSave={(id, text) => dispatch(createItem({id, text}))}
-                onFilterChange={filter => dispatch(setVisibilityFilter(filter))} />
+                />
             </div>
             <div className="col-md-4">
               <SummaryPane
                 itemsCount={items.length}
-                itemsCompletedCount={items.filter((item, index) => item.completed === true).length} />
+                itemsCompletedCount={items.filter((item, index) => item.completed === true).length}
+                />
             </div>
           </div>
         </div>
@@ -56,7 +63,8 @@ const App = React.createClass({
 function select(state) {
   return {
     filter: state.visiblityFilter,
-    items: state.items
+    items: state.items,
+    nameFilter: state.nameFilter
   };
 }
 

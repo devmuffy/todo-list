@@ -1,19 +1,8 @@
 import { combineReducers } from 'redux';
-import { COMPLETE_ITEM, CREATE_ITEM, DELETE_ITEM, SET_VISIBLITY_FILTER, VisiblityFilters } from '../actions/items';
+import { COMPLETE_ITEM, CREATE_ITEM, DELETE_ITEM, SET_NAME_FILTER, SET_VISIBLITY_FILTER, VisiblityFilters } from '../actions/items';
 import ItemClient from '../utils/ItemClient';
 
-const { SHOW_ALL } = VisiblityFilters;
 const initialState = ItemClient.load();
-
-function visiblityFilter(state = SHOW_ALL, action) {
-  switch(action.type) {
-  case SET_VISIBLITY_FILTER:
-    return action.filter;
-
-  default:
-    return state;
-  }
-}
 
 function items(state = initialState, action) {
   switch (action.type) {
@@ -40,7 +29,30 @@ function items(state = initialState, action) {
   }
 }
 
+const { SHOW_ALL } = VisiblityFilters;
+
+function visiblityFilter(state = SHOW_ALL, action) {
+  switch (action.type) {
+  case SET_VISIBLITY_FILTER:
+    return action.filter;
+
+  default:
+    return state;
+  }
+}
+
+function nameFilter(state = '', action) {
+  switch (action.type) {
+  case SET_NAME_FILTER:
+    return action.nameFilter;
+
+  default:
+    return state;
+  }
+}
+
 export default combineReducers({
+  nameFilter,
   items,
   visiblityFilter
 });
