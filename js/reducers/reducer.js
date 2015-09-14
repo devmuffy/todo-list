@@ -7,7 +7,7 @@ const initialState = ItemClient.load();
 function items(state = initialState, action) {
   switch (action.type) {
   case COMPLETE_ITEM:
-    return state.map((item) => {
+    return state.map(item => {
       if (item.id === action.index) {
         return Object.assign(item, { completed: true });
       }

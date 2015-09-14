@@ -29,11 +29,15 @@ export default React.createClass({
           </div>
         </div>
 
-        <input
-          type="text"
-          className="form-control"
-          maxLength="20"
-          onChange={this.handleNameFilterChange} />
+        <div className="form-group has-feedback">
+          <input
+            type="text"
+            className="form-control"
+            maxLength="20"
+            onChange={this.handleNameFilterChange}
+            placeholder="Filter by name" />
+          <span className="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
 
         <ul className="list-group">
           {this.props.items.map((item) =>
@@ -56,7 +60,7 @@ export default React.createClass({
     }, 200);
   },
 
-  handleChange(event) {
+  handleFilterChange(event) {
     this.props.onFilterChange(event.target.value);
   },
 
@@ -73,7 +77,7 @@ export default React.createClass({
           type="radio"
           name="filters"
           defaultValue={filter}
-          onChange={this.handleChange} /> {name}
+          onChange={this.handleFilterChange} /> {name}
       </label>
     );
   }
