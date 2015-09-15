@@ -1,7 +1,7 @@
 import App from './components/App.react';
 import ItemClient from './utils/ItemClient';
 import React from 'react';
-import myApp from './reducers/reducer';
+import myApp from './reducers/items';
 import { compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { devTools, persistState } from 'redux-devtools';

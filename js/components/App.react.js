@@ -9,19 +9,8 @@ const App = React.createClass({
   render() {
     const { dispatch, filter, items, nameFilter } = this.props;
 
-    const shownItems = items
-    .filter(item => {
-      switch (filter) {
-      case VisiblityFilters.SHOW_ACTIVE:
-        return item.completed !== true;
-      case VisiblityFilters.SHOW_COMPLETED:
-        return item.completed === true;
-      default:
-        return true;
-      }
-    })
-    .filter(item => {
-      return item.text.indexOf(nameFilter) > -1;
+    const shownItems = items.filter(item => {
+      return filterBy(filter, item) && nameFilterBy(nameFilter, item)
     });
 
     return (
@@ -59,6 +48,21 @@ const App = React.createClass({
   }
 
 });
+
+function filterBy(filter, item) {
+  switch (filter) {
+  case VisiblityFilters.SHOW_ACTIVE:
+    return item.completed !== true;
+  case VisiblityFilters.SHOW_COMPLETED:
+    return item.completed === true;
+  default:
+    return true;
+  }
+}
+
+function nameFilterBy(nameFilter, item) {
+  return item.text.indexOf(nameFilter) > -1;
+}
 
 function select(state) {
   return {
