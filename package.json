@@ -10,6 +10,7 @@
     "react": "*",
     "react-redux": "*",
     "redux": "*",
+    "redux-thunk": "^0.1.0",
     "superagent": "*"
   },
   "devDependencies": {

@@ -1,10 +1,15 @@
-import { combineReducers } from 'redux';
-import { COMPLETE_ITEM, CREATE_ITEM, DELETE_ITEM, SET_NAME_FILTER, SET_VISIBLITY_FILTER, VisiblityFilters } from '../actions/items';
+import {
+  COMPLETE_ITEM,
+  CREATE_ITEM,
+  DELETE_ITEM,
+  SET_NAME_FILTER,
+  SET_VISIBLITY_FILTER,
+  VisiblityFilters } from '../actions/items';
 import ItemClient from '../utils/ItemClient';
 
 const initialState = ItemClient.load();
 
-function items(state = initialState, action) {
+export function items(state = initialState, action) {
   switch (action.type) {
   case COMPLETE_ITEM:
     return state.map(item => {
@@ -31,7 +36,7 @@ function items(state = initialState, action) {
 
 const { SHOW_ALL } = VisiblityFilters;
 
-function visiblityFilter(state = SHOW_ALL, action) {
+export function visiblityFilter(state = SHOW_ALL, action) {
   switch (action.type) {
   case SET_VISIBLITY_FILTER:
     return action.filter;
@@ -41,7 +46,7 @@ function visiblityFilter(state = SHOW_ALL, action) {
   }
 }
 
-function nameFilter(state = '', action) {
+export function nameFilter(state = '', action) {
   switch (action.type) {
   case SET_NAME_FILTER:
     return action.nameFilter;
@@ -50,9 +55,3 @@ function nameFilter(state = '', action) {
     return state;
   }
 }
-
-export default combineReducers({
-  nameFilter,
-  items,
-  visiblityFilter
-});
