@@ -3,8 +3,8 @@ import React, { PropTypes } from 'react';
 export default React.createClass({
 
   propTypes: {
-    itemsCompletedCount: React.PropTypes.number.isRequired,
-    itemsCount: React.PropTypes.number.isRequired
+    itemsCompletedCount: PropTypes.number.isRequired,
+    itemsCount: PropTypes.number.isRequired
   },
 
   render() {

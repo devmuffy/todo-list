@@ -10,7 +10,7 @@ const App = React.createClass({
     const { dispatch, filter, items, nameFilter } = this.props;
 
     const shownItems = items.filter(item => {
-      return filterBy(filter, item) && nameFilterBy(nameFilter, item)
+      return filterBy(filter, item) && nameFilterBy(nameFilter, item);
     });
 
     return (
@@ -38,7 +38,7 @@ const App = React.createClass({
             <div className="col-md-4">
               <SummaryPane
                 itemsCount={items.length}
-                itemsCompletedCount={items.filter((item, index) => item.completed === true).length}
+                itemsCompletedCount={items.filter((item) => item.completed === true).length}
                 />
             </div>
           </div>
